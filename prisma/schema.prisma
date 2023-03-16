@@ -1,0 +1,161 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Staff {
+  id Int @id @unique @default(autoincrement())
+  name String
+  lastname String
+  cpf String @unique
+  image String?
+  password String 
+  role String
+  created_at DateTime @default(now())
+  last_login DateTime?
+  last_logout DateTime?
+
+  @@map("staff")
+}
+
+model User {
+  id Int @id @unique @default(autoincrement())
+  name String
+  lastname String
+  image String?
+  cpf String   @unique
+  email String
+  password String
+  phone1 String
+  phone2 String?
+  created_at DateTime @default(now())
+
+  Address Address[]
+  Kart Kart[]
+  Sale Sale[]
+  @@map("users")
+}
+
+model Address {
+  user User @relation(fields: [userid], references: [id])
+  userid Int
+  postalcode String @id @unique
+  address String
+  neighborhood String 
+  complement String? 
+  number Int?
+
+
+  @@map("addresses")
+}
+
+model Kart {
+  id Int @id @unique @default(autoincrement())
+  user User @relation(fields: [userid], references: [id])
+  userid Int
+  product Product @relation(fields: [productid], references: [id])
+  productid Int
+  quantity Int
+  discount Int?
+  price Int  
+  size String
+  created_at DateTime @default(now())
+
+  @@map("karts")
+}
+
+model Sale {
+  id Int @id @unique @default(autoincrement())
+  code String
+  product Product @relation(fields: [productid], references: [id])
+  productid Int
+  user User @relation(fields: [userid], references: [id])
+  userid Int
+  discount Int?
+  price Decimal
+  size String
+  quantity Int
+  deliverydate DateTime
+  deliveryprice Decimal?
+
+  @@map("sales")
+}
+
+model Product {
+  id Int @id @unique @default(autoincrement())
+  title String
+  image String
+  desc String
+  type String
+  dropcode String
+  drop Drop  @relation(fields: [dropcode], references: [code])
+  created_at DateTime @default(now())
+  ProductCategory ProductCategory?
+
+  Kart Kart[]
+  inventory Inventory[]
+  Sale Sale[]
+  @@map("products")
+}
+
+model Drop {
+  id Int @id @unique @default(autoincrement())
+  code String @unique
+
+  product Product[]
+  theme Theme[]
+  @@map("drops")
+}
+
+model Theme {
+  id Int @id @unique @default(autoincrement())
+  drop Drop  @relation(fields: [dropcode], references: [code])
+  dropcode String
+  category Category @relation(fields: [categoryid], references: [id])
+  categoryid Int
+  slidebanner String
+  pagebanner String
+  logo String
+  perfil String 
+
+  @@map("themes")
+}
+
+model Category {
+  id Int @id @unique @default(autoincrement())
+  title String
+
+  theme Theme[]
+  ProductCategory ProductCategory[]
+  @@map("categories")
+}
+
+model ProductCategory {
+  id Int @id @unique @default(autoincrement())
+  product Product @relation(fields: [productid], references: [id])
+  productid Int @unique
+  category Category @relation(fields: [categoryid], references: [id])
+  categoryid Int
+
+  @@map("productsCategories")
+}
+
+model Inventory {
+  id Int @id @unique @default(autoincrement())
+  product Product @relation(fields: [productid], references: [id])
+  productid Int
+  size String
+  initial_inventory Int
+  current_inventory Int?
+  price Decimal
+  discount Decimal?
+
+  @@map("inventories")
+}
