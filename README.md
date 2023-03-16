@@ -13,6 +13,8 @@ Para instalar o projeto, é necessário ter a última versão LTS do Node, que p
 
 A API foi feita em cima de um banco de dados SQL utilizando PostgreSQL, que pode ser baixado aqui: https://www.postgresql.org/download/.
 
-Após a instalação do Node, você deve abrir um terminal e navegar até a pasta do projeto. Em seguida, digite o comando "npx prisma migrate dev" ou "npx prisma migrate" para criar o banco de dados.
+Após as configurações de ambiente, você deve abrir um terminal e navegar até a pasta do projeto e digitar o comando "npm install" para instalar todas as dependências necessárias para o projeto.
+
+Após a instalação dos pacotes, digite o comando "npx prisma migrate dev" ou "npx prisma migrate" para criar o banco de dados.
 
 Ao terminar a criação do banco de dados, execute o comando "npm start" para iniciar o projeto.
