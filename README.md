@@ -10,6 +10,9 @@ Os desafiosdesse projeto foram as vaidações de compras pois é necessário che
 
 # Instalação
 Para instalar o projeto é necessário ter a última versão LTS do node, que pode ser encontada aqui: https://nodejs.org/en;
+
 A api foi feita em cima de um banco de dados SQL utilizando postgresql que pode ser baixado por aqui: https://www.postgresql.org/download/;
+
 Após a Instalação do Node você deve abrir um terminal e navegar até a pasta do projeto, depois digite o comando npx prisma migrate dev ou npx prisma migrate para criar o banco de dados;
+
 Ao terminar a criação do banco de dados execute o comando npm start para iniciar o projeto.
